@@ -103,9 +103,140 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"main.js":[function(require,module,exports) {
+})({"pikachuCSS.js":[function(require,module,exports) {
+"use strict";
 
-},{}],"..\\..\\..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var style = "\n.skin * {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n}\n.skin *::before,\n.skin *::after {\n    box-sizing: border-box;\n}\n.skin {\n    position: relative;\n    background: #ffe600;\n    min-height: 50vh;\n}\n@keyframes shake {\n    0% {\n    transform: rotate(0deg);\n    }\n    33% {\n    transform: rotate(3deg);\n    }\n    66% {\n    transform: rotate(-3deg);\n    }\n    100% {\n    transform: rotate(0deg);\n    }\n}\n.nose {\n    position: absolute;\n    border: 10px solid black;\n    border-color: black transparent transparent;\n    width: 0px;\n    height: 0px;\n    top: 85px;\n    left: 50%;\n    margin-left: -10px;\n}\n.nose::before {\n    position: absolute;\n    content: \"\";\n    background: black;\n    display: block;\n    width: 20px;\n    height: 4px;\n    top: -14px;\n    left: -10px;\n    border-top-left-radius: 10px 4px;\n    border-top-right-radius: 10px 4px;\n}\n.nose:hover {\n    animation: shake 200ms infinite linear;\n}\n.eye {\n    position: absolute;\n    border: 3px solid black;\n    background: #2e2e2e;\n    width: 64px;\n    height: 64px;\n    left: 50%;\n    top: 50px;\n    margin-left: -32px;\n    border-radius: 50%;\n}\n.eye::after {\n    position: absolute;\n    display: block;\n    content: \"\";\n    border: 3px solid black;\n    background: white;\n    border-radius: 50%;\n    width: 31px;\n    height: 31px;\n    margin-left: 7px;\n    margin-top: -2px;\n}\n.eye.left {\n    transform: translateX(-120px);\n}\n.eye.right {\n    transform: translateX(120px);\n}\n.mouth {\n    position: absolute;\n    width: 200px;\n    height: 200px;\n    left: 50%;\n    top: 120px;\n    margin-left: -100px;\n}\n.mouth > .upperLipLeft {\n    position: absolute;\n    border: 3px solid black;\n    width: 90px;\n    height: 20px;\n    border-top: none;\n    border-right: none;\n    border-bottom-left-radius: 50px 25px;\n    transform: rotate(-15deg);\n    left: 50%;\n    margin-left: -90px;\n    z-index: 1;\n    background: #ffe600;\n}\n.mouth > .upperLipRight {\n    position: absolute;\n    border: 3px solid black;\n    width: 90px;\n    height: 20px;\n    border-top: none;\n    border-left: none;\n    border-bottom-right-radius: 50px 25px;\n    transform: rotate(15deg);\n    left: 50%;\n    z-index: 1;\n    background: #ffe600;\n}\n.mouth > .lowerLip {\n    position: absolute;\n    height: 172px;\n    width: 100%;\n    bottom: 20px;\n    overflow: hidden;\n}\n.mouth > .lowerLip > .lipShadow {\n    position: absolute;\n    border: 3px solid black;\n    background: #9b000a;\n    width: 160px;\n    height: 1000px;\n    bottom: 15px;\n    left: 50%;\n    margin-left: -80px;\n    border-radius: 80px / 320px;\n    overflow: hidden;\n}\n.mouth > .lowerLip > .lipShadow > .lipShadowUp {\n    position: absolute;\n    border: 1px solid red;\n    width: 200px;\n    height: 300px;\n    left: 50%;\n    margin-left: -100px;\n    bottom: -170px;\n    border-radius: 100px;\n    background: #ff485f;\n}\n.cheek {\n    position: absolute;\n    border: 3px solid black;\n    width: 88px;\n    height: 88px;\n    left: 50%;\n    top: 160px;\n    margin-left: -44px;\n    border-radius: 50%;\n    background: #ff0000;\n}\n.cheek > img {\n    position: absolute;\n    left: 50%;\n    top: 50%;\n}\n.cheek.left {\n    transform: translateX(-165px);\n}\n.cheek.left > img {\n    transform: rotateY(-180deg);\n    transform-origin: 0 0;\n}\n.cheek.right {\n    transform: translateX(165px);\n}\n";
+exports.default = style;
+},{}],"test.js":[function(require,module,exports) {
+'use strict';
+
+var _pikachuCSS = require('./pikachuCSS.js');
+
+var _pikachuCSS2 = _interopRequireDefault(_pikachuCSS);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var player = {
+    id: undefined,
+    time: 50,
+    n: 1,
+    ui: {
+        output1: document.querySelector('#output1'),
+        output2: document.querySelector('#output2')
+    },
+    events: {
+        '#btnPause': 'pause',
+        '#btnPlay': 'play',
+        '#btnSlow': 'slow',
+        '#btnNormal': 'normal',
+        '#btnFast': 'fast'
+    },
+    init: function init() {
+        player.ui.output1.innerText = _pikachuCSS2.default.substr(0, player.n);
+        player.ui.output2.innerHTML = _pikachuCSS2.default.substr(0, player.n);
+        player.bindEvents();
+        player.play();
+    },
+    bindEvents: function bindEvents() {
+        for (var key in player.events) {
+            if (player.events.hasOwnProperty(key)) {
+                var value = player.events[key]; // value = pause / play / slow ...
+                document.querySelector(key).onclick = player[value];
+            }
+        }
+    },
+    run: function run() {
+        player.n += 1;
+        if (player.n > _pikachuCSS2.default.length) {
+            window.clearInterval(player.id);
+            return;
+        }
+        player.ui.output1.innerText = _pikachuCSS2.default.substr(0, player.n);
+        player.ui.output2.innerHTML = _pikachuCSS2.default.substr(0, player.n);
+        player.ui.output1.scrollTop = player.ui.output1.scrollHeight;
+    },
+    pause: function pause() {
+        window.clearInterval(player.id);
+    },
+    play: function play() {
+        player.pause();
+        player.id = setInterval(player.run, player.time);
+    },
+    slow: function slow() {
+        player.pause();
+        player.time = 200;
+        player.play();
+    },
+    normal: function normal() {
+        player.pause();
+        player.time = 50;
+        player.play();
+    },
+    fast: function fast() {
+        player.pause();
+        player.time = 0;
+        player.play();
+    }
+};
+
+player.init();
+
+/*
+const output1 = document.querySelector('#output1')
+const output2 = document.querySelector('#output2')
+
+let n = 1
+output1.innerText = style.substr(0, n) 
+output2.innerHTML = style.substr(0, n)
+
+const run = () => {
+    n += 1
+    if (n > style.length) {
+        clearInterval(id)
+        return
+    }
+    output1.innerText = style.substr(0, n)
+    output2.innerHTML = style.substr(0, n)
+    output1.scrollTop = output1.scrollHeight
+}
+let time = 50
+const play = () => {
+    return setInterval(run, time)
+}
+let id = play()
+const pause = () => {
+    window.clearInterval(id)
+}
+
+
+btnPause.onclick = () => {
+    pause()
+}
+btnPlay.onclick = () => {
+    pause()
+    id = play()
+}
+btnSlow.onclick = () => {
+    pause()
+    time = 150
+    id = play()
+}
+btnNormal.onclick = () => {
+    pause()
+    time = 50
+    id = play()
+}
+btnFast.onclick = () => {
+    pause()
+    time = 0
+    id = play()
+}
+*/
+},{"./pikachuCSS.js":"pikachuCSS.js"}],"..\\..\\..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -134,7 +265,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '64880' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '57178' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -275,4 +406,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},["..\\..\\..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js","main.js"], null)
+},{}]},{},["..\\..\\..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js","test.js"], null)
+//# sourceMappingURL=/test.75caf5e6.map
